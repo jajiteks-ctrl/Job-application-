@@ -51,12 +51,13 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
 ]
 
+
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 
     'django.middleware.security.SecurityMiddleware',
 
-    # WhiteNoise middleware
+    # WhiteNoise middleware for static files
     'whitenoise.middleware.WhiteNoiseMiddleware',
 
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -67,7 +68,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
 ROOT_URLCONF = 'job.urls'
+
 
 TEMPLATES = [
     {
@@ -84,21 +87,22 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'job.wsgi.application'
 
 
-# Database
-# Railway PostgreSQL support
+# Database Configuration (Render + Neon PostgreSQL)
 
 DATABASES = {
     "default": dj_database_url.config(
-        default=os.getenv("DATABASE_URL")
+        default=os.getenv("DATABASE_URL"),
+        conn_max_age=600,
+        ssl_require=True
     )
 }
 
 
 # Password validation
-# https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -178,12 +182,12 @@ STATICFILES_STORAGE = (
 )
 
 
-# CORS
+# CORS Configuration
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 
-    # Add your frontend deployed URL here
+    # Add your frontend URL after deployment
     # Example:
     # "https://your-frontend.vercel.app",
 ]
@@ -191,12 +195,12 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOW_CREDENTIALS = True
 
 
-# Security settings for Railway
+# Security Settings for Render
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://*.up.railway.app",
+    "https://*.onrender.com",
 ]
 
 
