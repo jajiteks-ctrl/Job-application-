@@ -58,12 +58,12 @@ class Job(models.Model):
         null=True
     )
 
-    company_logo = models.ImageField(
-        upload_to="company_logos/",
+    company_logo = models.URLField(
+    
         blank=True,
         null=True
     )
-
+ 
     # -----------------------------
     # Job Details
     # -----------------------------
