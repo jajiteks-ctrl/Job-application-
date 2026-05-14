@@ -142,7 +142,25 @@ class JobApplicationSerializer(serializers.ModelSerializer):
 
         model = JobApplication
 
-        fields = "__all__"
+        fields = [
+        "id",
+        "job",
+        "job_title",
+        "candidate",
+        "full_name",
+        "email",
+        "phone",
+        "resume",
+        "cover_letter",
+        "experience_years",
+        "current_company",
+        "current_ctc",
+        "expected_ctc",
+        "linkedin_url",
+        "portfolio_url",
+        "status",
+        "applied_at",
+    ]
 
         read_only_fields = (
             "candidate",
@@ -155,10 +173,10 @@ class JobApplicationSerializer(serializers.ModelSerializer):
     # -----------------------------------
 
     def create(self, validated_data):
-
         request = self.context.get("request")
 
-        validated_data["candidate"] = request.user
+        if request and request.user:
+            validated_data["candidate"] = request.user
 
         return super().create(validated_data)
 

@@ -9,8 +9,11 @@ https://docs.djangoproject.com/en/6.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
-
+from dotenv import load_dotenv
 import os
+
+load_dotenv()
+
 import dj_database_url
 from pathlib import Path
 from datetime import timedelta
@@ -93,9 +96,12 @@ WSGI_APPLICATION = 'job.wsgi.application'
 
 # Database Configuration (Render + Neon PostgreSQL)
 
+import dj_database_url
+import os
+
 DATABASES = {
     "default": dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}"
+        default=os.getenv("DATABASE_URL")
     )
 }
 
